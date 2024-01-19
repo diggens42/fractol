@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errorhandler.c                                     :+:      :+:    :+:   */
+/*   ft_put_char_fd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 17:11:23 by fwahl             #+#    #+#             */
-/*   Updated: 2024/01/19 21:56:35 by fwahl            ###   ########.fr       */
+/*   Created: 2023/10/10 18:22:12 by fwahl             #+#    #+#             */
+/*   Updated: 2023/11/05 00:06:42 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "libft.h"
 
-void	error_malloc(void)
-{
-	ft_putstr("Malloc error");
-	exit(EXIT_FAILURE);
-}
+// write a single char 'c' to the given file descriptor 'fd'
+// fd: 0 standard input (stdin), 1 standard output (stdout), 
+//     2 standard error (stderror)
 
-void	error_input(void)
+void	ft_putchar_fd(char c, int fd)
 {
-	ft_putstr("Invalid input, please enter the following:\n");
-	ft_putstr("./fractol mandelbrot\n");
-	ft_putstr("./fractol julia <c.x: -2.0 to 2.0> <c.y: -2.0 to 2.0>\n");
-	ft_putstr("./fractol bs\n");
+	write(fd, &c, 1);
 }

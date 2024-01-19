@@ -5,123 +5,128 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/28 15:30:27 by fwahl             #+#    #+#             */
-/*   Updated: 2023/12/08 18:01:34 by fwahl            ###   ########.fr       */
+/*   Created: 2023/11/29 16:50:46 by fwahl             #+#    #+#             */
+/*   Updated: 2024/01/19 22:07:16 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include "MLX42/include/MLX42/MLX42.h"
 #include "fractol.h"
 
-// Mandelbrot: z = z^2 + c
-//			   z id initially (0,0)
-//			   c is actual point
-//
-// Julia:	   ./fractol <real> <complex>
-//			   z = pixel_point + constant
+void	start_cords(int x, int y, t_fractol *fr)
+{
+	double	scale;
 
-// static void	select_type(int x, int y, t_fractol *fractal)
-// {
-// 	static int is_init = 0;
-// 	double	scale;
-	
-// 	scale = 2.0 / (WIDTH * fractal -> zoom);
-// 	if (!ft_strncmp(fractal -> name, "julia", 5))
-// 	{
-// 		if (!is_init)
-// 		{
-// 			fractal -> c.x = fractal -> julia_x;
-// 			fractal -> c.y = fractal -> julia_y;
-// 			is_init = 1;
-// 		}
-// 		fractal -> z.x = (x - WIDTH / 2.0) * scale + fractal -> center_x;
-// 		fractal -> z.y = (y - HEIGHT / 2.0) * scale + fractal -> center_y;
-// 	}
-// 	else if (!ft_strncmp(fractal -> name, "mandelbrot", 10))
-// 	{
-// 		fractal -> c.x = (x - WIDTH / 2.0) * scale + fractal -> center_x;
-// 		fractal -> c.y = (y - HEIGHT / 2.0) * scale + fractal -> center_y;
-// 		fractal -> z.x = 0;
-// 		fractal -> z.x = 0;
-// 	}
-// }
+	scale = 2.0 / (WIDTH * fr->zoom);
+	if (!ft_strncmp(fr->name, "julia", 5))
+	{
+		fr->z.x = (x - WIDTH / 2.0) * scale + fr->center_x;
+		fr->z.y = (y - HEIGHT / 2.0) * scale + fr->center_y;
+	}
+	else if (!ft_strncmp(fr->name, "mandelbrot", 10))
+	{
+		fr->c.x = (x - WIDTH / 2.0) * scale + fr->center_x;
+		fr->c.y = (y - HEIGHT / 2.0) * scale + fr->center_y;
+		fr->z.x = 0;
+		fr->z.y = 0;
+	}
+	else if (!ft_strncmp(fr->name, "bs", 12))
+	{
+		fr->c.x = (x - WIDTH / 2.0) * scale + fr->center_x;
+		fr->c.y = (y - HEIGHT / 2.0) * scale + fr->center_y;
+		fr->z.x = 0;
+		fr->z.y = 0;
+	}
+}
 
-void	draw_pixel(int x, int y, t_fractol *fractal)
+void	render_bs(int x, int y, t_fractol *fr)
 {
 	int		i;
 	int		color;
-	double	scale;
-	
-	scale = 2.0 / (WIDTH * fractal -> zoom);
-	if (!ft_strncmp(fractal -> name, "julia", 5))
+	double	temp_zx;
+
+	start_cords(x, y, fr);
+	i = -1;
+	while (++i < fr->max_itr)
 	{
-		fractal -> z.x = (x - WIDTH / 2.0) * scale + fractal -> center_x;
-		fractal -> z.y = (y - HEIGHT / 2.0) * scale + fractal -> center_y;
-	}
-	else if (!ft_strncmp(fractal -> name, "mandelbrot", 10))
-	{
-		fractal -> c.x = (x - WIDTH / 2.0) * scale + fractal -> center_x;
-		fractal -> c.y = (y - HEIGHT / 2.0) * scale + fractal -> center_y;
-		fractal -> z.x = 0;
-		fractal -> z.y = 0;
-	}
-	i = 0;
-	while (i < fractal -> max_itr)
-	{
-		fractal -> z = sum_cmplx(square_cmplx(fractal -> z), fractal -> c);
-		if ((fractal -> z.x * fractal -> z.x) + (fractal -> z.y * fractal -> z.y) > fractal -> div_val)
+		temp_zx = fr->z.x * fr->z.x - fr->z.y * fr->z.y + fr->c.x;
+		fr->z.y = 2 * fabs(fr->z.x * fr->z.y) + fr->c.y;
+		fr->z.x = temp_zx;
+		if ((fr->z.x * fr->z.x) + (fr->z.y * fr->z.y) > 4.0)
 		{
-			color = get_color(i);
-			mlx_put_pixel(fractal->img.img, x, y, color);
+			color = get_color_bs(i, fr->color_shift);
+			mlx_put_pixel(fr->img.img, x, y, color);
 			return ;
 		}
-		i++;
 	}
-	mlx_put_pixel(fractal -> img.img, x, y, C15);
+	mlx_put_pixel(fr -> img.img, x, y, BLACK);
 }
 
-void	draw_fractal(t_fractol *fractal)
+void	render_mandel_julia(int x, int y, t_fractol *fr)
+{
+	int		i;
+	int		color;
+	double	temp_zx;
+
+	start_cords(x, y, fr);
+	i = -1;
+	while (++i < fr -> max_itr)
+	{
+		temp_zx = fr->z.x * fr->z.x - fr->z.y * fr->z.y + fr->c.x;
+		fr->z.y = 2 * fr->z.x * fr->z.y + fr->c.y;
+		fr->z.x = temp_zx;
+		if ((fr->z.x * fr->z.x) + (fr->z.y * fr->z.y) > 4.0)
+		{
+			color = get_color_mandel_julia(i, fr->color_shift);
+			mlx_put_pixel(fr->img.img, x, y, color);
+			return ;
+		}
+	}
+	mlx_put_pixel(fr -> img.img, x, y, BLACK);
+}
+
+void	draw_fractal(t_fractol *fr)
 {
 	int	x;
 	int	y;
-	
+
 	y = -1;
 	while (++y < HEIGHT)
 	{
 		x = -1;
 		while (++x < WIDTH)
 		{
-			draw_pixel(x, y, fractal);
+			if (!ft_strcmp(fr->name, "bs"))
+				render_bs(x, y, fr);
+			else
+				render_mandel_julia(x, y, fr);
 		}
 	}
-	mlx_image_to_window(fractal -> mlx_init, fractal -> img.img, 0, 0);
+	fr->color_shift = (fr->color_shift + 1) % 15;
+	mlx_image_to_window(fr->mlx_init, fr->img.img, 0, 0);
 }
 
 int	main(int argc, char **argv)
 {
-	t_fractol fractal;
-	
+	t_fractol	fr;
+
 	if ((argc == 2 && !ft_strcmp(argv[1], "mandelbrot"))
-		|| (argc == 4 && !ft_strcmp(argv[1], "julia")))
+		|| (argc == 4 && !ft_strcmp(argv[1], "julia"))
+		|| (argc == 2 && !ft_strcmp(argv[1], "bs")))
 	{
-		fractal.name = argv[1];
-		if (!ft_strncmp(argv[1], "julia", 5))
+		fr.name = argv[1];
+		if (!ft_strcmp(argv[1], "julia"))
 		{
-			fractal.julia_x = atodbl(argv[2]);
-			fractal.julia_y = atodbl(argv[3]);
+			fr.c.x = atodbl(argv[2]);
+			fr.c.y = atodbl(argv[3]);
 		}
-		init_fractal(&fractal);
-		draw_fractal(&fractal);
-		mlx_loop(fractal.mlx_init);
+		init_fractal(&fr);
+		draw_fractal(&fr);
+		mlx_loop(fr.mlx_init);
 	}
 	else
 	{
-		error_input(&fractal);
+		error_input();
 		exit(EXIT_FAILURE);
 	}
-	mlx_terminate(fractal.mlx_init);
+	mlx_terminate(fr.mlx_init);
 }
-

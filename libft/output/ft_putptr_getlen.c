@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errorhandler.c                                     :+:      :+:    :+:   */
+/*   ft_putptr_getlen.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 17:11:23 by fwahl             #+#    #+#             */
-/*   Updated: 2024/01/19 21:56:35 by fwahl            ###   ########.fr       */
+/*   Created: 2023/11/02 20:06:02 by fwahl             #+#    #+#             */
+/*   Updated: 2023/11/05 00:03:59 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "libft.h"
 
-void	error_malloc(void)
+int	ft_putptr_getlen(unsigned long num)
 {
-	ft_putstr("Malloc error");
-	exit(EXIT_FAILURE);
-}
+	int	len;
+	int	ret;
 
-void	error_input(void)
-{
-	ft_putstr("Invalid input, please enter the following:\n");
-	ft_putstr("./fractol mandelbrot\n");
-	ft_putstr("./fractol julia <c.x: -2.0 to 2.0> <c.y: -2.0 to 2.0>\n");
-	ft_putstr("./fractol bs\n");
+	ret = ft_putstr_getlen("0x");
+	if (ret == -1)
+		return (-1);
+	len = ft_putbase_getlen(num, 16, 0) + 2;
+	if (len == -1)
+		return (-1);
+	return (len);
 }

@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errorhandler.c                                     :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 17:11:23 by fwahl             #+#    #+#             */
-/*   Updated: 2024/01/19 21:56:35 by fwahl            ###   ########.fr       */
+/*   Created: 2023/10/10 18:24:06 by fwahl             #+#    #+#             */
+/*   Updated: 2023/11/05 00:04:36 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "libft.h"
 
-void	error_malloc(void)
-{
-	ft_putstr("Malloc error");
-	exit(EXIT_FAILURE);
-}
+// traverse through the string and output each character one by one
 
-void	error_input(void)
+void	ft_putstr_fd(char *s, int fd)
 {
-	ft_putstr("Invalid input, please enter the following:\n");
-	ft_putstr("./fractol mandelbrot\n");
-	ft_putstr("./fractol julia <c.x: -2.0 to 2.0> <c.y: -2.0 to 2.0>\n");
-	ft_putstr("./fractol bs\n");
+	if (s != NULL)
+	{
+		while (*s)
+		{
+			write(fd, s, 1);
+			s++;
+		}
+	}
 }

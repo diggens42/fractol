@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errorhandler.c                                     :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 17:11:23 by fwahl             #+#    #+#             */
-/*   Updated: 2024/01/19 21:56:35 by fwahl            ###   ########.fr       */
+/*   Created: 2023/10/13 14:00:35 by fwahl             #+#    #+#             */
+/*   Updated: 2023/10/14 22:12:10 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "libft.h"
 
-void	error_malloc(void)
-{
-	ft_putstr("Malloc error");
-	exit(EXIT_FAILURE);
-}
+// 1. Use 'del' function to free the content of the node
+// 2. Free the node itself
 
-void	error_input(void)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	ft_putstr("Invalid input, please enter the following:\n");
-	ft_putstr("./fractol mandelbrot\n");
-	ft_putstr("./fractol julia <c.x: -2.0 to 2.0> <c.y: -2.0 to 2.0>\n");
-	ft_putstr("./fractol bs\n");
+	del(lst -> content);
+	free(lst);
 }

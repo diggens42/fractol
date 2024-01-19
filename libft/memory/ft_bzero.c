@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errorhandler.c                                     :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 17:11:23 by fwahl             #+#    #+#             */
-/*   Updated: 2024/01/19 21:56:35 by fwahl            ###   ########.fr       */
+/*   Created: 2023/10/06 15:16:51 by fwahl             #+#    #+#             */
+/*   Updated: 2023/10/14 15:08:48 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "libft.h"
 
-void	error_malloc(void)
-{
-	ft_putstr("Malloc error");
-	exit(EXIT_FAILURE);
-}
+// 1. void *ptr: pointer to memory area that needs to be set to zero
+// 2. n: number of bytes to set to zero
 
-void	error_input(void)
+void	ft_bzero(void *ptr, size_t n)
 {
-	ft_putstr("Invalid input, please enter the following:\n");
-	ft_putstr("./fractol mandelbrot\n");
-	ft_putstr("./fractol julia <c.x: -2.0 to 2.0> <c.y: -2.0 to 2.0>\n");
-	ft_putstr("./fractol bs\n");
+	ft_memset(ptr, 0, n);
 }

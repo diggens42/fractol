@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errorhandler.c                                     :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 17:11:23 by fwahl             #+#    #+#             */
-/*   Updated: 2024/01/19 21:56:35 by fwahl            ###   ########.fr       */
+/*   Created: 2023/10/08 12:28:52 by fwahl             #+#    #+#             */
+/*   Updated: 2023/10/12 14:38:23 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "libft.h"
 
-void	error_malloc(void)
+int	ft_atoi(const char *s)
 {
-	ft_putstr("Malloc error");
-	exit(EXIT_FAILURE);
-}
+	int	result;
+	int	sign;
 
-void	error_input(void)
-{
-	ft_putstr("Invalid input, please enter the following:\n");
-	ft_putstr("./fractol mandelbrot\n");
-	ft_putstr("./fractol julia <c.x: -2.0 to 2.0> <c.y: -2.0 to 2.0>\n");
-	ft_putstr("./fractol bs\n");
+	result = 0;
+	sign = 1;
+	while (*s != '\0' && ((*s == ' ' || (*s >= '\t' && *s <= '\r'))))
+		s++;
+	if (*s == '-' || *s == '+')
+	{
+		if (*s == '-')
+			sign = -1;
+		s++;
+		if (*s == '-' || *s == '+')
+			return (0);
+	}
+	while (ft_isdigit(*s))
+	{
+		result = result * 10 + *s - '0';
+		s++;
+	}
+	return (sign * result);
 }

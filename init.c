@@ -6,50 +6,43 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:50:46 by fwahl             #+#    #+#             */
-/*   Updated: 2023/12/07 19:14:04 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/01/19 22:06:41 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	init_fractal(t_fractol *fractal)
+void	init_fractal(t_fractol *fr)
 {
-	fractal -> mlx_init = mlx_init(WIDTH, HEIGHT, fractal -> name, true);
-	if (fractal -> mlx_init == NULL)
+	fr -> mlx_init = mlx_init(WIDTH, HEIGHT, fr->name, true);
+	if (fr->mlx_init == NULL)
 	{
-		mlx_terminate(fractal -> mlx_init);
-		free(fractal -> mlx_init);
+		mlx_terminate(fr->mlx_init);
+		free(fr->mlx_init);
 		error_malloc();
 	}
-	fractal->img.img = mlx_new_image(fractal -> mlx_init, WIDTH, HEIGHT);
-	if (fractal -> img.img == NULL)
+	fr->img.img = mlx_new_image(fr->mlx_init, WIDTH, HEIGHT);
+	if (fr->img.img == NULL)
 	{
-		mlx_terminate(fractal -> mlx_init);
-		free(fractal -> mlx_init);
+		mlx_terminate(fr->mlx_init);
+		free(fr->mlx_init);
 		error_malloc();
 	}
-	init_struct(fractal);
-	init_events(fractal);
+	init_struct(fr);
+	init_events(fr);
 }
 
-void	init_struct(t_fractol *fractal)
+void	init_struct(t_fractol *fr)
 {
-	fractal -> div_val = 4;
-	fractal -> max_itr = 50;
-	fractal -> zoom = 1.0;
-	fractal -> center_x = 0.0;
-	fractal -> center_y = 0.0;
-	if (!ft_strncmp(fractal -> name, "julia", 5))
-	{
-		fractal -> c.x = fractal -> julia_x;
-		fractal -> c.y = fractal -> julia_y;		
-	}
-
+	fr->max_itr = 42;
+	fr->zoom = 1.0;
+	fr->center_x = 0.0;
+	fr->center_y = 0.0;
+	fr->color_shift = 1;
 }
 
-void	init_events(t_fractol *fractal)
+void	init_events(t_fractol *fr)
 {
-	mlx_key_hook(fractal -> mlx_init, handle_key, fractal);
-	// mlx_cursor_hook(fractal -> mlx_init, handle_mouse_pos, &fractal);
-	mlx_scroll_hook(fractal -> mlx_init, handle_scroll, fractal);
+	mlx_key_hook(fr->mlx_init, handle_key, fr);
+	mlx_scroll_hook(fr->mlx_init, handle_scroll, fr);
 }

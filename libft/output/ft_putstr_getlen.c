@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errorhandler.c                                     :+:      :+:    :+:   */
+/*   ft_putstr_getlen.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 17:11:23 by fwahl             #+#    #+#             */
-/*   Updated: 2024/01/19 21:56:35 by fwahl            ###   ########.fr       */
+/*   Created: 2023/11/02 20:53:17 by fwahl             #+#    #+#             */
+/*   Updated: 2023/11/05 00:04:30 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "libft.h"
 
-void	error_malloc(void)
+int	ft_putstr_getlen(char *str)
 {
-	ft_putstr("Malloc error");
-	exit(EXIT_FAILURE);
-}
+	int	len;
+	int	ret;
 
-void	error_input(void)
-{
-	ft_putstr("Invalid input, please enter the following:\n");
-	ft_putstr("./fractol mandelbrot\n");
-	ft_putstr("./fractol julia <c.x: -2.0 to 2.0> <c.y: -2.0 to 2.0>\n");
-	ft_putstr("./fractol bs\n");
+	len = 0;
+	if (!str)
+	{
+		ret = ft_putstr_getlen("(null)");
+		if (ret == -1)
+			return (-1);
+		return (6);
+	}
+	while (str[len] != '\0')
+	{
+		ret = write(STDOUT_FILENO, &str[len], 1);
+		if (ret == -1)
+			return (-1);
+		len++;
+	}
+	return (len);
 }

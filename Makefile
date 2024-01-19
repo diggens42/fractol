@@ -1,7 +1,7 @@
 NAME = fractol
 
 CC = cc
-# CFLAGS = -Werror -Wextra -Wall
+CFLAGS = -Werror -Wextra -Wall
 LIBFT = ./libft/libft.a
 
 MLXFLAGS = -framework Cocoa -framework OpenGL -framework IOKit
@@ -17,22 +17,15 @@ all: $(NAME)
 $(LIBFT):
 		$(MAKE) -C ./libft
 
-# $(OBJDIR):
-# 	mkdir -p $(OBJDIR)
-# 	$(foreach src,$(SRCS),mkdir -p $(OBJDIR)/$(dir $(src));)
-
-# $(OBJDIR)/%.o: %.c $(HEADER) | $(OBJDIR)
-# 	@mkdir -p $(@D)
-# 	$(CC) $(CFLAGS) -I. -c $< -o $@
-
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) -o $(NAME) $(OBJS) $(MLXFLAGS) $(MLXINCLUDE) $(LIBFT)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(MLXFLAGS) $(MLXINCLUDE) $(LIBFT)
 
 clean:
 	$(MAKE) clean -C ./libft
 	rm -f $(OBJS)
 
 fclean: clean
+	$(MAKE) fclean -C ./libft
 	rm -f $(NAME)
 
 re: fclean all
