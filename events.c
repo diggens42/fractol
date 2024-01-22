@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 19:12:55 by fwahl             #+#    #+#             */
-/*   Updated: 2024/01/19 22:06:14 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/01/22 17:30:48 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,11 @@ void	handle_key(struct mlx_key_data key_data, void *param)
 		fr->max_itr += 4;
 	if (key_data.key == MLX_KEY_O && key_data.action == MLX_PRESS)
 		fr->max_itr -= 4;
-	draw_fractal(fr);
+	if ((key_data.action == MLX_PRESS) && (key_data.key == MLX_KEY_LEFT
+			|| key_data.key == MLX_KEY_RIGHT || key_data.key == MLX_KEY_UP
+			|| key_data.key == MLX_KEY_DOWN || key_data.key == MLX_KEY_I
+			|| key_data.key == MLX_KEY_O))
+		draw_fractal(fr);
 }
 
 void	handle_scroll(double xdelta, double ydelta, void *param)
@@ -64,8 +68,9 @@ void	handle_zoom(mlx_t *mlx, t_fractol *fr, double zoom_factor)
 
 void	handle_close(t_fractol *fr)
 {
-	mlx_delete_image(fr->mlx_init, fr->img.img);
-	mlx_close_window(fr->mlx_init);
-	free(fr->mlx_init);
+	mlx_terminate(fr->mlx_init);
 	exit(EXIT_SUCCESS);
 }
+
+	// mlx_delete_image(fr->mlx_init, fr->img.img);
+	// mlx_close_window(fr->mlx_init);

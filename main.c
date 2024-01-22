@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:50:46 by fwahl             #+#    #+#             */
-/*   Updated: 2024/01/19 22:07:16 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/01/22 17:19:03 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@ void	start_cords(int x, int y, t_fractol *fr)
 	double	scale;
 
 	scale = 2.0 / (WIDTH * fr->zoom);
-	if (!ft_strncmp(fr->name, "julia", 5))
+	if (!ft_strcmp(fr->name, "julia"))
 	{
 		fr->z.x = (x - WIDTH / 2.0) * scale + fr->center_x;
 		fr->z.y = (y - HEIGHT / 2.0) * scale + fr->center_y;
 	}
-	else if (!ft_strncmp(fr->name, "mandelbrot", 10))
+	else if (!ft_strcmp(fr->name, "mandelbrot"))
 	{
 		fr->c.x = (x - WIDTH / 2.0) * scale + fr->center_x;
 		fr->c.y = (y - HEIGHT / 2.0) * scale + fr->center_y;
 		fr->z.x = 0;
 		fr->z.y = 0;
 	}
-	else if (!ft_strncmp(fr->name, "bs", 12))
+	else if (!ft_strcmp(fr->name, "bs"))
 	{
 		fr->c.x = (x - WIDTH / 2.0) * scale + fr->center_x;
 		fr->c.y = (y - HEIGHT / 2.0) * scale + fr->center_y;
@@ -102,7 +102,6 @@ void	draw_fractal(t_fractol *fr)
 		}
 	}
 	fr->color_shift = (fr->color_shift + 1) % 15;
-	mlx_image_to_window(fr->mlx_init, fr->img.img, 0, 0);
 }
 
 int	main(int argc, char **argv)
@@ -118,15 +117,15 @@ int	main(int argc, char **argv)
 		{
 			fr.c.x = atodbl(argv[2]);
 			fr.c.y = atodbl(argv[3]);
+			if ((fr.c.x > 2.0 || fr.c.x < -2.0)
+				|| (fr.c.y > 2.0 || fr.c.y < -2.0))
+				error_input();
 		}
 		init_fractal(&fr);
 		draw_fractal(&fr);
 		mlx_loop(fr.mlx_init);
 	}
 	else
-	{
 		error_input();
-		exit(EXIT_FAILURE);
-	}
 	mlx_terminate(fr.mlx_init);
 }

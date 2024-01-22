@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 16:50:46 by fwahl             #+#    #+#             */
-/*   Updated: 2024/01/19 22:06:41 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/01/21 18:43:44 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@ void	init_fractal(t_fractol *fr)
 	if (fr->mlx_init == NULL)
 	{
 		mlx_terminate(fr->mlx_init);
-		free(fr->mlx_init);
+		// free(fr->mlx_init);
 		error_malloc();
 	}
 	fr->img.img = mlx_new_image(fr->mlx_init, WIDTH, HEIGHT);
 	if (fr->img.img == NULL)
 	{
 		mlx_terminate(fr->mlx_init);
-		free(fr->mlx_init);
+		// free(fr->mlx_init);
 		error_malloc();
 	}
+	mlx_image_to_window(fr->mlx_init, fr->img.img, 0, 0);
 	init_struct(fr);
 	init_events(fr);
 }

@@ -6,7 +6,7 @@
 /*   By: fwahl <fwahl@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:42:05 by fwahl             #+#    #+#             */
-/*   Updated: 2024/01/19 21:59:59 by fwahl            ###   ########.fr       */
+/*   Updated: 2024/01/22 17:14:19 by fwahl            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_cmplx
 
 typedef struct s_fractol
 {
-	void	*mlx_init;
+	mlx_t	*mlx_init;
 	t_img	img;
 	char	*name;
 	int		max_itr;
