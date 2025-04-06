@@ -36,11 +36,3 @@ Fractol is a program that allows users to render the Mandelbrot, Julia, and Burn
    Z_{n+1} = (Z_n.real^2 - Z_n.imag^2 + C.real) + (2 * |Z_n.real| * |Z_n.imag| + C.imag)i
    \]
    This modification causes a more "ship-like" shape when visualized, especially at higher iterations.
-
-## Installation
-
-To compile and run Fractol, follow these steps:
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/fractol.git
