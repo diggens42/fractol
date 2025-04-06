@@ -37,3 +37,10 @@ Fractol is a program that allows users to render the Mandelbrot, Julia, and Burn
    \]
    This modification causes a more "ship-like" shape when visualized, especially at higher iterations.
 
+## Installation
+
+To compile and run Fractol, follow these steps:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/fractol.git
