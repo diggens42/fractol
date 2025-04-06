@@ -1,0 +1,39 @@
+# Fractol
+
+Fractol is a program that allows users to render the Mandelbrot, Julia, and Burning Ship fractals using the MLX42 graphics library in C. It provides a graphical interface to explore these famous fractals, with adjustable parameters to customize the appearance and zoom levels.
+
+## Features
+
+- Render the **Mandelbrot Set**.
+- Render the **Julia Set** with interactive controls to modify parameters.
+- Render the **Burning Ship Set**, a variant of the Mandelbrot fractal.
+- Zoom in/out and move through the fractals for detailed exploration.
+- Adjustable parameters for fractals for personalizing the render.
+
+## Mathematical Formulas
+
+1. **Mandelbrot Set**
+   The Mandelbrot set is defined by the recurrence relation:
+   \[
+   Z_{n+1} = Z_n^2 + C
+   \]
+   where:
+   - \( Z \) is a complex number, and
+   - \( C \) is a constant complex number.
+
+   If the magnitude of \( Z_n \) exceeds a certain limit (usually 2), the point is considered outside the Mandelbrot set. Points that do not escape are considered part of the set.
+
+2. **Julia Set**
+   The Julia set is similar to the Mandelbrot set, but here \( C \) is fixed, and each point in the complex plane is iterated through the formula:
+   \[
+   Z_{n+1} = Z_n^2 + C
+   \]
+   where \( Z_n \) is a point in the complex plane. The behavior of this iteration depends heavily on the constant \( C \).
+
+3. **Burning Ship Set**
+   The Burning Ship set is a variation of the Mandelbrot set, where the iteration formula is:
+   \[
+   Z_{n+1} = (Z_n.real^2 - Z_n.imag^2 + C.real) + (2 * |Z_n.real| * |Z_n.imag| + C.imag)i
+   \]
+   This modification causes a more "ship-like" shape when visualized, especially at higher iterations.
+
